@@ -266,8 +266,6 @@ html[data-theme="dark"] .schedule-section{background:#101a22}.schedule-form .sch
 .review-arrow{box-sizing:border-box;flex:0 0 36px;padding:0}
 .review-arrow .arrow-icon{display:block;width:17px;height:17px;vertical-align:0}
 @media(max-width:620px){.review-arrow{width:36px;height:36px;flex-basis:36px}}
-
-/* Keep the brand and the two header controls visually balanced on phones. */
 @media(max-width:620px){.header-inner{gap:8px}.brand{gap:6px;min-width:0}.brand b{font-size:13px;letter-spacing:.08em}.brand small{font-size:6px;letter-spacing:.13em}.brand-mark{width:30px;height:30px;flex:0 0 30px;font-size:16px}.menu-toggle{width:34px;height:34px;min-width:34px;min-height:34px;flex:0 0 34px;padding:0}.header-inner>.theme-toggle{width:34px;height:34px;min-width:34px;min-height:34px;flex:0 0 34px;margin:0}}
 
 /* Give the dark FAQ cards visible gutters and comfortable text insets. */
