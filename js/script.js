@@ -71,8 +71,6 @@ if (scheduleForm) {
     dateInput.min = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
   }
   scheduleForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-
     const nameInput = scheduleForm.querySelector('input[name="name"]');
     const phoneInput = scheduleForm.querySelector('input[name="phone"]');
     const emailInput = scheduleForm.querySelector('input[name="email"]');
@@ -97,37 +95,7 @@ if (scheduleForm) {
     if (timeField) timeField.setCustomValidity(/^(Morning|Afternoon|Evening|Flexible)$/.test(timeField.value) ? '' : 'Choose a time preference.');
     if (serviceField) serviceField.setCustomValidity(/^(Plumbing repair|Drain cleaning|Commercial plumbing|Installation or remodel|Water heater|Boiler or heating|Ductless mini-splits|Pipe repair, PEX or copper|Other)$/.test(serviceField.value) ? '' : 'Choose a service from the list.');
     if (detailsField) detailsField.setCustomValidity(detailsField.value.length <= 1200 && !/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/.test(detailsField.value) ? '' : 'Use up to 1,200 characters without control characters.');
-    if (!scheduleForm.reportValidity()) return;
-    const status = scheduleForm.querySelector('#schedule-status');
-    const button = scheduleForm.querySelector('button[type="submit"]');
-    const payload = Object.fromEntries(new FormData(scheduleForm).entries());
-    const endpoint = scheduleForm.action.replace('https://formsubmit.co/', 'https://formsubmit.co/ajax/');
-    if (status) status.textContent = 'Sending your booking request...';
-    if (button) button.disabled = true;
-
-    fetch(endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify(payload)
-    })
-      .then(async (response) => {
-        const result = await response.json();
-        if (!response.ok || result.success === false || result.success === 'false') {
-          throw new Error(result.message || 'The request could not be sent.');
-        }
-        scheduleForm.reset();
-        if (dateInput) {
-          const today = new Date();
-          dateInput.min = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
-        }
-        if (status) status.textContent = 'Booking request sent. Mahoney Plumbing & Heating will contact you to confirm availability.';
-      })
-      .catch(() => {
-        if (status) status.textContent = 'We could not send the booking request online. Please call (508) 579-4968 or email contact@mahoney-plumbing.com.';
-      })
-      .finally(() => {
-        if (button) button.disabled = false;
-      });
+    if (!scheduleForm.reportValidity()) event.preventDefault();
   });
 }
 
