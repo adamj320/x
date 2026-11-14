@@ -259,3 +259,24 @@ html[data-theme="dark"] .brands,html[data-theme="dark"] .trust-payment{backgroun
 html[data-theme="dark"] .schedule-section{background:#101a22}.schedule-form .schedule-fields input[type="date"]{color-scheme:light!important;accent-color:#147eae;background:#fff;color:#073754;border-color:#9fcfe1}
 .schedule-form .schedule-fields input[type="date"]:focus{border-color:#147eae;outline:2px solid #57bce4;outline-offset:1px}
 .schedule-form .schedule-fields input[type="date"]::-webkit-calendar-picker-indicator{cursor:pointer;opacity:1;filter:invert(34%) sepia(63%) saturate(1084%) hue-rotate(155deg) brightness(91%) contrast(91%)}
+
+/* Keep directional icons crisp and consistently sized at every viewport. */
+.arrow-icon{display:inline-block;width:1em;height:1em;flex:0 0 auto;vertical-align:-.16em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.review-carousel-controls>div{flex:0 0 auto}
+.review-arrow{box-sizing:border-box;flex:0 0 36px;padding:0}
+.review-arrow .arrow-icon{display:block;width:17px;height:17px;vertical-align:0}
+@media(max-width:620px){.review-arrow{width:36px;height:36px;flex-basis:36px}}
+
+/* Keep the brand and the two header controls visually balanced on phones. */
+@media(max-width:620px){.header-inner{gap:8px}.brand{gap:6px;min-width:0}.brand b{font-size:13px;letter-spacing:.08em}.brand small{font-size:6px;letter-spacing:.13em}.brand-mark{width:30px;height:30px;flex:0 0 30px;font-size:16px}.menu-toggle{width:34px;height:34px;min-width:34px;min-height:34px;flex:0 0 34px;padding:0}.header-inner>.theme-toggle{width:34px;height:34px;min-width:34px;min-height:34px;flex:0 0 34px;margin:0}}
+
+/* Give the dark FAQ cards visible gutters and comfortable text insets. */
+html[data-theme="dark"] .faq-list details{margin:8px;padding:0 14px;border:1px solid #344954;border-radius:6px}
+html[data-theme="dark"] .faq-list details:last-child{border-bottom:1px solid #344954}
+html[data-theme="dark"] .faq-list summary{padding-left:0}
+html[data-theme="dark"] .faq-list details p{padding-inline:0}
+
+/* Keep the emergency availability panel readable with the dark theme. */
+html[data-theme="dark"] .schedule-emergency{background:#1a2b35;border-left-color:#21a9e0;color:#e6eef3}
+html[data-theme="dark"] .schedule-emergency strong{color:#f4f9fc}
+html[data-theme="dark"] .schedule-emergency span{color:#c1d4de}

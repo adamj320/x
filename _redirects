@@ -1,0 +1,17 @@
+/ /home 301!
+/index.html /home 301!
+/plumbing.html /plumbing 301!
+/water-heaters.html /water-heaters 301!
+/boilers.html /boilers 301!
+/pex.html /pex 301!
+/drain-cleaning.html /drain-cleaning 301!
+/commercial.html /commercial 301!
+/ductless-mini-splits.html /ductless-mini-splits 301!
+/home /index.html 200
+/plumbing /plumbing.html 200
+/water-heaters /water-heaters.html 200
+/boilers /boilers.html 200
+/pex /pex.html 200
+/drain-cleaning /drain-cleaning.html 200
+/commercial /commercial.html 200
+/ductless-mini-splits /ductless-mini-splits.html 200

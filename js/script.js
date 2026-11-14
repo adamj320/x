@@ -1,3 +1,41 @@
+// Rotate the plumbing portfolio on each visit while avoiding an identical
+// selection on consecutive refreshes.
+const randomProjectGrid = document.querySelector('.project-grid[data-randomize]');
+if (randomProjectGrid) {
+  const photos = Array.from(randomProjectGrid.querySelectorAll('.project-photo'));
+  const displayCount = Math.min(Number(randomProjectGrid.dataset.visible) || 12, photos.length);
+  const selectionKey = 'mahoney-project-photo-selection';
+  let previousSelection = [];
+  try {
+    const savedSelection = JSON.parse(localStorage.getItem(selectionKey) || '[]');
+    if (Array.isArray(savedSelection)) previousSelection = savedSelection;
+  } catch (_) { /* Random selection still works without browser storage. */ }
+
+  const shuffledPhotos = photos.slice();
+  for (let index = shuffledPhotos.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [shuffledPhotos[index], shuffledPhotos[swapIndex]] = [shuffledPhotos[swapIndex], shuffledPhotos[index]];
+  }
+  const selectedPhotos = shuffledPhotos.slice(0, displayCount);
+  const selectedNames = selectedPhotos.map((photo) => photo.querySelector('img')?.getAttribute('src') || '').sort();
+  const sameSelection = selectedNames.length === previousSelection.length
+    && selectedNames.every((name, index) => name === previousSelection[index]);
+  if (sameSelection) {
+    const newPhoto = shuffledPhotos.find((photo) => !previousSelection.includes(photo.querySelector('img')?.getAttribute('src')));
+    if (newPhoto && selectedPhotos.length) selectedPhotos[selectedPhotos.length - 1] = newPhoto;
+  }
+
+  for (let index = selectedPhotos.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [selectedPhotos[index], selectedPhotos[swapIndex]] = [selectedPhotos[swapIndex], selectedPhotos[index]];
+  }
+  randomProjectGrid.replaceChildren(...selectedPhotos);
+  try {
+    const currentNames = selectedPhotos.map((photo) => photo.querySelector('img')?.getAttribute('src') || '').sort();
+    localStorage.setItem(selectionKey, JSON.stringify(currentNames));
+  } catch (_) { /* The gallery still renders when storage is unavailable. */ }
+}
+
 const menuButton = document.querySelector('.menu-toggle');
 const navigation = document.querySelector('#nav');
 
@@ -152,8 +190,11 @@ faqDetails.forEach((details) => {
   const toggles = document.querySelectorAll('.theme-toggle');
   if (!toggles.length) return;
   const readTheme = () => {
-    try { return localStorage.getItem('mahoney-theme') === 'dark' ? 'dark' : 'light'; }
-    catch (_) { return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light'; }
+    try {
+      const savedTheme = localStorage.getItem('mahoney-theme');
+      if (savedTheme === 'dark' || savedTheme === 'light') return savedTheme;
+    } catch (_) { /* Fall through to the device preference. */ }
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   };
   const applyTheme = (theme, save = false, animate = false) => {
     if (animate) {
